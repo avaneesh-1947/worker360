@@ -1,66 +1,89 @@
-import { FaGoogle, FaFacebookF } from "react-icons/fa";
-import { HiEye } from "react-icons/hi";
 
-export default function SignIn() {
+
+import { useState } from "react";
+import { FaGoogle, FaFacebook, FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
+export default function SignUp() {
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+  const [agreed, setAgreed] = useState(false);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-10 w-full max-w-md">
-        {/* Back Arrow */}
-        <button className="text-xl mb-4 text-gray-500">
-          ←
+    <div className="min-h-screen flex items-center justify-center bg-white p-4">
+      <div className="max-w-sm w-full space-y-6">
+        <button className="text-gray-500">
+        
         </button>
+        <h2 className="text-2xl font-bold text-center">Sign In</h2>
 
-        {/* Title */}
-        <h2 className="text-2xl font-semibold text-center mb-6">Sign In</h2>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium">Email Address</label>
+            <input
+              type="email"
+              placeholder="Enter Email Address"
+              className="mt-1 w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 bg-gray-100"
+            />
+          </div>
 
-        {/* Email Input */}
-        <label className="block text-sm font-medium mb-1">Email Address</label>
-        <input
-          type="email"
-          placeholder="Enter Email Address"
-          className="w-full p-3 mb-4 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-400"
-        />
+          <div className="relative">
+            <label className="block text-sm font-medium">Password</label>
+            <input
+              type={showPassword1 ? "text" : "password"}
+              placeholder="Enter Password"
+              className="mt-1 w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 bg-gray-100"
+            />
+            <span
+              className="absolute right-4 top-9 text-gray-500 cursor-pointer"
+              onClick={() => setShowPassword1(!showPassword1)}
+            >
+              {showPassword1 ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
 
-        {/* Password Input */}
-        <label className="block text-sm font-medium mb-1">Password</label>
-        <div className="relative mb-4">
-          <input
-            type="password"
-            placeholder="Enter Password"
-            className="w-full p-3 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-400"
-          />
-          <HiEye className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
-        </div>
+         
 
-        {/* Remember Me + Forgot */}
-        <div className="flex items-center justify-between mb-6 text-sm">
-          <label className="flex items-center space-x-2">
-            <input type="checkbox" className="accent-green-500" />
-            <span>Remember Me</span>
-          </label>
-          <button className="text-green-600 font-medium">Forgot Password</button>
-        </div>
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              checked={agreed}
+              onChange={() => setAgreed(!agreed)}
+              className="accent-green-500 w-4 h-4"
+            />
+            <label className="text-sm">
+              I agree to the{" "}
+              <span className="text-green-600 font-medium cursor-pointer">
+                Terms and Conditions
+              </span>
+            </label>
+          </div>
 
-        {/* Sign In Button */}
-        <button className="w-full bg-green-500 text-white py-3 rounded-full font-semibold hover:bg-green-600 transition">
-          Sign In
-        </button>
-
-        {/* Divider */}
-        <div className="flex items-center my-6">
-          <hr className="flex-grow border-t border-gray-300" />
-          <span className="mx-2 text-gray-500">Or</span>
-          <hr className="flex-grow border-t border-gray-300" />
-        </div>
-
-        {/* Social Buttons */}
-        <div className="flex justify-center gap-4">
-          <button className="bg-white border rounded-full p-3 shadow-md hover:bg-gray-100">
-            <FaGoogle className="text-xl text-red-500" />
+          <button className="w-full bg-green-500 text-white font-semibold py-3 rounded-full hover:bg-green-600 transition">
+            Sign Up
           </button>
-          <button className="bg-white border rounded-full p-3 shadow-md hover:bg-gray-100">
-            <FaFacebookF className="text-xl text-blue-600" />
-          </button>
+
+          <div className="flex items-center justify-center gap-2 text-gray-400 my-2">
+            <span className="border-t border-gray-300 w-1/4" />
+            <span className="text-sm">Or</span>
+            <span className="border-t border-gray-300 w-1/4" />
+          </div>
+
+          <div className="flex justify-center space-x-4">
+            <button className="p-3 rounded-lg shadow hover:bg-gray-100">
+              <FaGoogle className="text-xl" />
+            </button>
+            <button className="p-3 rounded-lg shadow hover:bg-gray-100">
+              <FaFacebook className="text-xl text-blue-600" />
+            </button>
+          </div>
+
+          <p className="text-center text-sm text-gray-600">
+            Already have an account?{" "}
+            <Link to="/signup" className="text-green-600 font-semibold">
+              Sign UP
+            </Link>
+          </p>
         </div>
       </div>
     </div>

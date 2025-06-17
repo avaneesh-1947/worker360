@@ -20,7 +20,7 @@ export default function Navbar() {
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-6 items-center">
            <NavLink to="/" className="block text-gray-700 hover:text-green-600">Home</NavLink>
-          <NavLink to="/about" className="block text-gray-700 hover:text-green-600">About</NavLink>
+          {/* <NavLink to="/about" className="block text-gray-700 hover:text-green-600">About</NavLink> */}
           <NavLink to ="/" className="block text-gray-700 hover:text-green-600">Hire Worker</NavLink >
           <NavLink to="/signin" className="block text-gray-700 hover:text-green-600">Login</NavLink>
           <NavLink to="signup" className="block text-gray-700 hover:text-green-600">Sign Up</NavLink>

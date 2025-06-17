@@ -4,7 +4,7 @@ export default function ContactUs() {
       {/* Heading */}
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold text-[#54B435]">
-          Contact <span className="text-black">Worker</span>360
+          Contact <span className="text-black">Us</span>
         </h1>
         <p className="text-gray-600 mt-2">
           We’re here to help. Reach out with any questions or feedback.

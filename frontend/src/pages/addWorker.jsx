@@ -46,6 +46,7 @@ export default function WorkerSignup() {
       });
 
       if (response.ok) {
+        // localStorage.setItem("email", response.data.email);
         navigate("/");
       } else {
         alert("Registration failed.");

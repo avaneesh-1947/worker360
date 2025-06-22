@@ -9,6 +9,7 @@ export default function WorkerSignup() {
   const [location, setLocation] = useState("");
   const [mobile, setMobile] = useState("");
   const [skills, setSkills] = useState("");
+  const [image, setImage] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -20,36 +21,34 @@ export default function WorkerSignup() {
       !wageperhr ||
       !location ||
       !mobile ||
-      !skills
+      !skills ||
+      !image
     ) {
-      alert("Please fill all fields.");
+      alert("Please fill all fields and upload an image.");
       return;
     }
 
-    const data = {
-      name,
-      occupation,
-      experience: Number(experience),
-      wageperhr: Number(wageperhr),
-      location,
-      mobile,
-      skills: skills.split(",").map((s) => s.trim()),
-    };
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("occupation", occupation);
+    formData.append("experience", experience);
+    formData.append("wageperhr", wageperhr);
+    formData.append("location", location);
+    formData.append("mobile", mobile);
+    formData.append("skills", skills.split(",").map((s) => s.trim()));
+    formData.append("image", image);
 
     try {
       const response = await fetch("http://localhost:3333/workerReg", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+        body: formData,
       });
 
       if (response.ok) {
-        // localStorage.setItem("email", response.data.email);
-        navigate("/");
+        navigate("/hire");
       } else {
-        alert("Registration failed.");
+        const errorData = await response.json();
+        alert(`Registration failed: ${errorData.message}`);
       }
     } catch (error) {
       alert("Network error.");
@@ -57,9 +56,9 @@ export default function WorkerSignup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white p-4">
-      <div className="max-w-md w-full space-y-6">
-        <h2 className="text-2xl font-bold text-center">Worker Sign Up</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 pt-20">
+      <div className="max-w-md w-full space-y-6 bg-white p-8 rounded-2xl shadow-lg">
+        <h2 className="text-3xl font-bold text-center text-gray-900">Become a Worker</h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="block text-sm font-medium">Full Name</label>
@@ -133,9 +132,23 @@ export default function WorkerSignup() {
               onChange={(e) => setSkills(e.target.value)}
             />
           </div>
+          <div>
+            <label className="block text-sm font-medium">Upload Your Image</label>
+            <input
+              type="file"
+              accept="image/*"
+              className="mt-1 w-full text-sm text-gray-500
+                         file:mr-4 file:py-2 file:px-4
+                         file:rounded-full file:border-0
+                         file:text-sm file:font-semibold
+                         file:bg-green-50 file:text-green-700
+                         hover:file:bg-green-100"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
+          </div>
           <button
             type="submit"
-            className="w-full bg-green-500 text-white font-semibold py-3 rounded-full hover:bg-green-600 transition"
+            className="w-full bg-[#54B435] text-white font-semibold py-3 rounded-lg hover:bg-green-600 transition-colors duration-300"
           >
             Register
           </button>

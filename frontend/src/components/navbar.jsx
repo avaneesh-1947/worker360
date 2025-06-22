@@ -1,22 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
 
 
 export default function Navbar() {
-  const navigate  = useNavigate();
-  const [flag , setflag] = useState(false);
+  const navigate = useNavigate();
+  const [auth, setAuth] = useState(localStorage.getItem("email"));
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const handleLogout = () => {
     localStorage.removeItem("email");
-    setflag(!flag);
-    
-
+    setAuth(null);
+    navigate("/landingPage");
   }
-  const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
-  const auth = localStorage.getItem("email");
+  // Update auth state when localStorage changes
+  useEffect(() => {
+    const checkAuth = () => {
+      setAuth(localStorage.getItem("email"));
+    };
+
+    window.addEventListener('storage', checkAuth);
+    return () => window.removeEventListener('storage', checkAuth);
+  }, []);
 
   return (
     <nav className="bg-white shadow-md w-full fixed top-0 left-0 z-10">
@@ -39,7 +47,7 @@ export default function Navbar() {
               </>
             )}
             {auth && (
-              <NavLink to="/" className="block text-gray-700 hover:text-green-600" onClick={handleLogout}>Logout</NavLink>
+              <button onClick={handleLogout} className="block text-gray-700 hover:text-green-600">Logout</button>
             )}
           </div>
 
@@ -59,12 +67,12 @@ export default function Navbar() {
           <NavLink to="/" className="block text-gray-700 hover:text-green-600">Hire Worker</NavLink>
           {!auth && (
             <>
-              <NavLink to="/signin" className="block text-gray-700 hover:text-green-600">Login</NavLink>
+              <NavLink to="/login" className="block text-gray-700 hover:text-green-600">Login</NavLink>
               <NavLink to="/signup" className="block text-gray-700 hover:text-green-600">Sign Up</NavLink>
             </>
           )}
           {auth && (
-            <NavLink to="/" className="block text-gray-700 hover:text-green-600">Logout</NavLink>
+            <button onClick={handleLogout} className="block text-gray-700 hover:text-green-600 w-full text-left">Logout</button>
           )}
         </div>
       )}

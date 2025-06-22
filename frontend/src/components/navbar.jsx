@@ -1,11 +1,22 @@
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+
 
 export default function Navbar() {
+  const navigate  = useNavigate();
+  const [flag , setflag] = useState(false);
+  const handleLogout = () => {
+    localStorage.removeItem("email");
+    setflag(!flag);
+    
+
+  }
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
+
+  const auth = localStorage.getItem("email");
 
   return (
     <nav className="bg-white shadow-md w-full fixed top-0 left-0 z-10">
@@ -19,12 +30,17 @@ export default function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-6 items-center">
-           <NavLink to="/" className="block text-gray-700 hover:text-green-600">Home</NavLink>
-          {/* <NavLink to="/about" className="block text-gray-700 hover:text-green-600">About</NavLink> */}
-          <NavLink to ="/" className="block text-gray-700 hover:text-green-600">Hire Worker</NavLink >
-          <NavLink to="/signin" className="block text-gray-700 hover:text-green-600">Login</NavLink>
-          <NavLink to="/signup" className="block text-gray-700 hover:text-green-600">Sign Up</NavLink>
-          <NavLink to="/" className="block text-gray-700 hover:text-green-600">Logout</NavLink>
+            <NavLink to="/" className="block text-gray-700 hover:text-green-600">Home</NavLink>
+            <NavLink to="/" className="block text-gray-700 hover:text-green-600">Hire Worker</NavLink>
+            {!auth && (
+              <>
+                <NavLink to="/login" className="block text-gray-700 hover:text-green-600">Login</NavLink>
+                <NavLink to="/signup" className="block text-gray-700 hover:text-green-600">Sign Up</NavLink>
+              </>
+            )}
+            {auth && (
+              <NavLink to="/" className="block text-gray-700 hover:text-green-600" onClick={handleLogout}>Logout</NavLink>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -40,13 +56,18 @@ export default function Navbar() {
       {menuOpen && (
         <div className="md:hidden bg-white px-4 pb-4 space-y-2">
           <NavLink to="/" className="block text-gray-700 hover:text-green-600">Home</NavLink>
-          <NavLink to="/" className="block text-gray-700 hover:text-green-600">About</NavLink>
-          <NavLink to ="/" className="block text-gray-700 hover:text-green-600">Hire Worker</NavLink >
-          <NavLink to="/signin" className="block text-gray-700 hover:text-green-600">Login</NavLink>
-          <NavLink to="/signup" className="block text-gray-700 hover:text-green-600">Sign Up</NavLink>
-          <NavLink to="/" className="block text-gray-700 hover:text-green-600">Logout</NavLink>
+          <NavLink to="/" className="block text-gray-700 hover:text-green-600">Hire Worker</NavLink>
+          {!auth && (
+            <>
+              <NavLink to="/signin" className="block text-gray-700 hover:text-green-600">Login</NavLink>
+              <NavLink to="/signup" className="block text-gray-700 hover:text-green-600">Sign Up</NavLink>
+            </>
+          )}
+          {auth && (
+            <NavLink to="/" className="block text-gray-700 hover:text-green-600">Logout</NavLink>
+          )}
         </div>
       )}
     </nav>
   );
-} 
+}

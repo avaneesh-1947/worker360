@@ -9,6 +9,28 @@ export default function SignUp() {
   const [showPassword2, setShowPassword2] = useState(false);
   const [agreed, setAgreed] = useState(false);
 
+ 
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:3333/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await response.json();
+    
+
+    if(data.message === "Invalid email or password"){
+      alert("Invalid email or password");
+    }else{
+      localStorage.setItem("email", data.email);
+     
+        navigate("/");
+      
+    }
+    
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-white p-4">
       <div className="max-w-sm w-full space-y-6">
@@ -59,7 +81,7 @@ export default function SignUp() {
             </label>
           </div>
 
-          <button className="w-full bg-green-500 text-white font-semibold py-3 rounded-full hover:bg-green-600 transition">
+          <button className="w-full bg-green-500 text-white font-semibold py-3 rounded-full hover:bg-green-600 transition" onClick={handleSignUp}>
             Sign Up
           </button>
 
@@ -79,9 +101,9 @@ export default function SignUp() {
           </div>
 
           <p className="text-center text-sm text-gray-600">
-            Already have an account?{" "}
+            Don't have an account?{" "}
             <Link to="/signup" className="text-green-600 font-semibold">
-              Sign UP
+              Sign Up
             </Link>
           </p>
         </div>

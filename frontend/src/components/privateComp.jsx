@@ -1,8 +1,8 @@
-import { Outlet, Navigate } from "react-router";
-const auth = localStorage.getItem("email");
+import { Outlet, Navigate } from "react-router-dom";
 
 const PrivateComp = () => {
-  return auth ? <Outlet /> : <Navigate to="/login" />;
+  const auth = localStorage.getItem("email");
+  return auth ? <Outlet /> : <Navigate to="/landingPage" />;
 };
 
 export default PrivateComp;

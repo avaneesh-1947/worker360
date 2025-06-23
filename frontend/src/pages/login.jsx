@@ -1,45 +1,40 @@
-
-
 import { useState } from "react";
 import { FaGoogle, FaFacebook, FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Add useNavigate
 
 import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
-  const navigate = useNavigate();
+  const [email, setEmail] = useState(""); // Add this
+  const [password, setPassword] = useState(""); // Add this
+
   const [showPassword1, setShowPassword1] = useState(false);
 
   const [agreed, setAgreed] = useState(false);
-
- 
+  const navigate = useNavigate(); 
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     const response = await fetch("http://localhost:3333/login", {
       method: "POST",
-      body: JSON.stringify(),
+      headers: { "Content-Type": "application/json" }, 
+      body: JSON.stringify({ email, password }),
+
     });
     const data = await response.json();
-    
 
-    if(data.message === "Invalid email or password"){
+    if (data.message === "Invalid email or password") {
       alert("Invalid email or password");
-    }else{
-      localStorage.setItem("email", data.email);
-     
-        navigate("/");
-      
+    } else {
+      localStorage.setItem("email", email);
+      navigate("/"); 
     }
-    
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white p-4">
       <div className="max-w-sm w-full space-y-6">
-        <button className="text-gray-500">
-        
-        </button>
+        <button className="text-gray-500"></button>
         <h2 className="text-2xl font-bold text-center">Sign In</h2>
 
         <div className="space-y-4">
@@ -47,6 +42,8 @@ export default function SignUp() {
             <label className="block text-sm font-medium">Email Address</label>
             <input
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter Email Address"
               className="mt-1 w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 bg-gray-100"
             />
@@ -56,6 +53,8 @@ export default function SignUp() {
             <label className="block text-sm font-medium">Password</label>
             <input
               type={showPassword1 ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter Password"
               className="mt-1 w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 bg-gray-100"
             />
@@ -66,8 +65,6 @@ export default function SignUp() {
               {showPassword1 ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
-
-         
 
           <div className="flex items-center space-x-2">
             <input
@@ -84,8 +81,11 @@ export default function SignUp() {
             </label>
           </div>
 
-          <button className="w-full bg-green-500 text-white font-semibold py-3 rounded-full hover:bg-green-600 transition" onClick={handleSignUp}>
-            Sign Up
+          <button
+            className="w-full bg-green-500 text-white font-semibold py-3 rounded-full hover:bg-green-600 transition"
+            onClick={handleSignUp}
+          >
+            Sign In
           </button>
 
           <div className="flex items-center justify-center gap-2 text-gray-400 my-2">

@@ -7,6 +7,8 @@ import Footer from "./components/footer";
 import PageNotFound from "./components/pageNotfound";
 import Navbar from "./components/navbar";
 import PrivateComp from "./components/privateComp";
+import LandingPage from "./components/landingPage";
+import HireWorker from "./components/hireWorker";
 
 
 function App() {
@@ -20,10 +22,11 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<Home />} />
             <Route path="/addWorker" element={<WorkerSignUp />} />
+            <Route path="/hire" element={<HireWorker />} />
           </Route>
-          
+          <Route path="/landingPage" element={<LandingPage />} />
           <Route path="/signup" element={<SignUp />} />
-         <Route path="/signin" element={<SignIn />} />
+         <Route path="/login" element={<SignIn />} />
          <Route path= "*" element={<PageNotFound />} />
          
          

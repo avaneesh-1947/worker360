@@ -4,9 +4,12 @@ import { useState } from "react";
 import { FaGoogle, FaFacebook, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
+
 export default function SignUp() {
+  const navigate = useNavigate();
   const [showPassword1, setShowPassword1] = useState(false);
-  const [showPassword2, setShowPassword2] = useState(false);
+
   const [agreed, setAgreed] = useState(false);
 
  
@@ -15,7 +18,7 @@ export default function SignUp() {
     e.preventDefault();
     const response = await fetch("http://localhost:3333/login", {
       method: "POST",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify(),
     });
     const data = await response.json();
     

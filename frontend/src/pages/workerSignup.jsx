@@ -36,7 +36,7 @@ export default function WorkerSignup() {
       skills: skills.split(",").map((s) => s.trim()),
     };
 
-    try {
+   
       const response = await fetch("http://localhost:3333/workerReg", {
         method: "POST",
         headers: {
@@ -50,9 +50,7 @@ export default function WorkerSignup() {
       } else {
         alert("Registration failed.");
       }
-    } catch (error) {
-      alert("Network error.");
-    }
+   
   };
 
   return (

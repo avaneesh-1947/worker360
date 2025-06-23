@@ -16,7 +16,7 @@ export default function SignUp() {
     setError("");
     setLoading(true);
 
-    try {
+   
       const response = await fetch("http://localhost:3333/signup", {
         method: "POST",
         headers: {
@@ -32,11 +32,7 @@ export default function SignUp() {
       } else {
         setError(data.message || "Signup failed");
       }
-    } catch (err) {
-      setError("Network error. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+   
   };
 
   return (

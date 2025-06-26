@@ -17,15 +17,35 @@ export default function Navbar() {
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
-  // Update auth state when localStorage changes
+  // Har render pe localStorage check karo aur custom event bhi listen karo
   useEffect(() => {
+    // Initial check
     const checkAuth = () => {
-      setAuth(localStorage.getItem("email"));
+      const email = localStorage.getItem("email");
+      setAuth(email);
     };
 
-    window.addEventListener('storage', checkAuth);
-    return () => window.removeEventListener('storage', checkAuth);
-  }, []);
+    // Har render pe check karo
+    checkAuth();
+
+    // Storage event (dusre tabs ke liye)
+    const handleStorageChange = () => {
+      checkAuth();
+    };
+
+    // Custom event (same tab ke liye)
+    const handleAuthChange = () => {
+      checkAuth();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('authChange', handleAuthChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('authChange', handleAuthChange);
+    };
+  }, [location.pathname]); // Location change pe bhi check karo
 
   const isLandingPage = location.pathname === '/';
 

@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { FaGoogle, FaFacebook, FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom"; // Add useNavigate
-
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
-  const [email, setEmail] = useState(""); // Add this
-  const [password, setPassword] = useState(""); // Add this
+  const [email, setEmail] = useState(""); 
+  const [password, setPassword] = useState(""); 
 
   const [showPassword1, setShowPassword1] = useState(false);
 
@@ -27,6 +25,7 @@ export default function SignUp() {
       alert("Invalid email or password");
     } else {
       localStorage.setItem("email", email);
+      window.dispatchEvent(new Event('authChange'));
       navigate("/"); 
     }
   };

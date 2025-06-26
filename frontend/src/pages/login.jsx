@@ -1,21 +1,23 @@
 import { useState } from "react";
 import { FaGoogle, FaFacebook, FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom"; // Add useNavigate
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
-  const [email, setEmail] = useState(""); // Add this
-  const [password, setPassword] = useState(""); // Add this
+  const [email, setEmail] = useState(""); 
+  const [password, setPassword] = useState(""); 
+
   const [showPassword1, setShowPassword1] = useState(false);
-  const [showPassword2, setShowPassword2] = useState(false);
+
   const [agreed, setAgreed] = useState(false);
-  const navigate = useNavigate(); // Add this
+  const navigate = useNavigate(); 
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     const response = await fetch("http://localhost:3333/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" }, // Add headers
+      headers: { "Content-Type": "application/json" }, 
       body: JSON.stringify({ email, password }),
+
     });
     const data = await response.json();
 
@@ -23,6 +25,7 @@ export default function SignUp() {
       alert("Invalid email or password");
     } else {
       localStorage.setItem("email", email);
+      window.dispatchEvent(new Event('authChange'));
       navigate("/"); 
     }
   };

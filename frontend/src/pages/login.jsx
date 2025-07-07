@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { FaGoogle, FaFacebook, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 export default function SignUp() {
-  const [email, setEmail] = useState(""); 
+  const [identifier, setIdentifier] = useState(""); 
   const [password, setPassword] = useState(""); 
 
   const [showPassword1, setShowPassword1] = useState(false);
@@ -11,22 +12,35 @@ export default function SignUp() {
   const [agreed, setAgreed] = useState(false);
   const navigate = useNavigate(); 
 
-  const handleSignUp = async (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
     const response = await fetch("http://localhost:3333/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" }, 
-      body: JSON.stringify({ email, password }),
-
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ identifier, password }),
     });
     const data = await response.json();
 
-    if (data.message === "Invalid email or password") {
-      alert("Invalid email or password");
+    if (data.message === "Invalid email/username or password") {
+      alert("Invalid email/username or password");
     } else {
-      localStorage.setItem("email", email);
       window.dispatchEvent(new Event('authChange'));
-      navigate("/"); 
+      if (data.role === "client") {
+        localStorage.setItem("email", identifier);
+        localStorage.removeItem("username");
+        navigate("/");
+        toast.success('Login Successful!');
+      } else if (data.role === "worker") {
+        localStorage.setItem("username", identifier);
+        localStorage.removeItem("email");
+        //  window.dispatchEvent(new Event('authChange'));
+        navigate("/workerDashboard");
+        toast.success('Login Successful!');
+      }
+      else{
+        toast.error('Invalid email/username or password');
+      }
+     
     }
   };
 
@@ -38,12 +52,12 @@ export default function SignUp() {
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium">Email Address</label>
+            <label className="block text-sm font-medium">Email or Username</label>
             <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter Email Address"
+              type="text"
+              value={identifier}
+              onChange={(e) => setIdentifier(e.target.value)}
+              placeholder="Enter Email or Username"
               className="mt-1 w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 bg-gray-100"
             />
           </div>
@@ -81,8 +95,8 @@ export default function SignUp() {
           </div>
 
           <button
-            className="w-full bg-green-500 text-white font-semibold py-3 rounded-full hover:bg-green-600 transition"
-            onClick={handleSignUp}
+            className="w-full bg-green-500 text-white font-semibold py-3 rounded-full hover:bg-green-600 transition cursor-pointer"
+            onClick={handleSignIn}
           >
             Sign In
           </button>
@@ -94,10 +108,10 @@ export default function SignUp() {
           </div>
 
           <div className="flex justify-center space-x-4">
-            <button className="p-3 rounded-lg shadow hover:bg-gray-100">
+            <button className="p-3 rounded-lg shadow hover:bg-gray-100 cursor-pointer">
               <FaGoogle className="text-xl" />
             </button>
-            <button className="p-3 rounded-lg shadow hover:bg-gray-100">
+            <button className="p-3 rounded-lg shadow hover:bg-gray-100 cursor-pointer">
               <FaFacebook className="text-xl text-blue-600" />
             </button>
           </div>

@@ -9,6 +9,10 @@ import Navbar from "./components/navbar";
 import PrivateComp from "./components/privateComp";
 import LandingPage from "./components/landingPage";
 import HireWorker from "./components/hireWorker";
+// import WorkerLogin from "./pages/loginWorker";
+import WorkerDashboard from "./components/workerDashboard";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -23,16 +27,21 @@ function App() {
             <Route path="/about" element={<Home />} />
             <Route path="/addWorker" element={<WorkerSignUp />} />
             <Route path="/hire" element={<HireWorker />} />
+            <Route path="/workerDashboard" element={<WorkerDashboard />} />
+           
           </Route>
           <Route path="/landingPage" element={<LandingPage />} />
           <Route path="/signup" element={<SignUp />} />
+          {/* <Route path="/workerLogin" element={<WorkerLogin />} /> */}
          <Route path="/login" element={<SignIn />} />
          <Route path= "*" element={<PageNotFound />} />
          
          
          
+         
         </Routes> 
 <Footer/>
+<ToastContainer autoClose={2000} />
    
 
         

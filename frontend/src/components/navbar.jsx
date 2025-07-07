@@ -1,18 +1,21 @@
 import { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 
 export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [auth, setAuth] = useState(localStorage.getItem("email"));
+  const [auth, setAuth] = useState(localStorage.getItem("email") || localStorage.getItem("username"));
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("email");
+    localStorage.removeItem("username");
     setAuth(null);
     navigate("/landingPage");
+    toast.success('Logout Successful!');
   }
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
@@ -22,7 +25,8 @@ export default function Navbar() {
     // Initial check
     const checkAuth = () => {
       const email = localStorage.getItem("email");
-      setAuth(email);
+      const username = localStorage.getItem("username");
+      setAuth(email || username);
     };
 
     // Har render pe check karo

@@ -9,6 +9,8 @@ const workerSchema = new mongoose.Schema({
   location: { type: String, required: true },
   mobile: { type: String, required: true, unique: true },
   image: { type: String, required: true }, // To store the path of the image
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
 
 
   skills: [{ type: String, required: true }], // e.g., ['Fan Repair', 'Wiring', 'AC Service']

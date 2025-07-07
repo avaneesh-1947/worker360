@@ -20,7 +20,7 @@ const upload = multer({ storage: storage });
 
 router.post("/", upload.single('image'), async (req, res) => {
   try {
-    const { name, occupation, experience, wageperhr, location, mobile, skills } = req.body;
+    const { name, occupation, experience, wageperhr, location, mobile, skills, username, password } = req.body;
     
     if (!req.file) {
       return res.status(400).json({ message: "Image file is required." });
@@ -37,6 +37,8 @@ router.post("/", upload.single('image'), async (req, res) => {
       mobile,
       skills: skills.split(','), // Skills are sent as a comma-separated string
       image: imagePath,
+      username,
+      password,
     });
 
     const savedWorker = await newWorker.save();

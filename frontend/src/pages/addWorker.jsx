@@ -10,6 +10,8 @@ export default function WorkerSignup() {
   const [mobile, setMobile] = useState("");
   const [skills, setSkills] = useState("");
   const [image, setImage] = useState(null);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -22,7 +24,9 @@ export default function WorkerSignup() {
       !location ||
       !mobile ||
       !skills ||
-      !image
+      !image ||
+      !username ||
+      !password
     ) {
       alert("Please fill all fields and upload an image.");
       return;
@@ -37,6 +41,8 @@ export default function WorkerSignup() {
     formData.append("mobile", mobile);
     formData.append("skills", skills.split(",").map((s) => s.trim()));
     formData.append("image", image);
+    formData.append("username", username);
+    formData.append("password", password);
 
     try {
       const response = await fetch("http://localhost:3333/workerReg", {
@@ -130,6 +136,29 @@ export default function WorkerSignup() {
               className="mt-1 w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 bg-gray-100"
               value={skills}
               onChange={(e) => setSkills(e.target.value)}
+            />
+          </div>
+ 
+          <div>
+            <label className="block text-sm font-medium">Username</label>
+            <input
+              type="text"
+              placeholder="Choose a username"
+              className="mt-1 w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 bg-gray-100"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Password</label>
+            <input
+              type="password"
+              placeholder="Create a password"
+              className="mt-1 w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 bg-gray-100"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
           <div>

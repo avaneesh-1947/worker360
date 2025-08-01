@@ -1,7 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { FaUsers, FaShieldAlt, FaClock, FaStar, FaCheckCircle, FaArrowRight } from "react-icons/fa";
 
  function LandingPage() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const email = localStorage.getItem("email");
+    const username = localStorage.getItem("username");
+    if (email) {
+      navigate("/");
+    } else if (username) {
+      navigate("/workerDashboard");
+    }
+  }, [navigate]);
   return (
     <div className="min-h-screen bg-white pt-16">
       {/* Hero Section */}
@@ -150,7 +161,7 @@ import { FaUsers, FaShieldAlt, FaClock, FaStar, FaCheckCircle, FaArrowRight } fr
               {
                 title: "Home Cleaning",
                 description: "Professional cleaning services for your home",
-                image: "https://img.freepik.com/free-photo/cleaning-woman-sanitizing-window_23-2148999939.jpg",
+                image: "/homecleaning.png",
                 price: "From ₹299"
               },
               {

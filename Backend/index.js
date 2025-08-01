@@ -7,6 +7,8 @@ import workerReg from "./api/wrokerReg.api.js";
 import login from "./api/login.api.js";
 import signup from "./api/signup.api.js";
 import getWorker from "./api/getWorker.api.js";
+import map from "./api/map.api.js";
+import updateWorker from "./api/updateWorker.api.js";
 // import workerLogin from "./api/workerLogin.api.js";
 import http from "http";
 import { Server } from "socket.io";
@@ -29,6 +31,8 @@ app.use('/workerReg', workerReg);
 app.use('/login', login);
 app.use('/signup', signup);
 app.use('/getWorker', getWorker);
+app.use('/map', map);
+app.use('/updateWorker', updateWorker);
 // app.use('/workerLogin', workerLogin);
 
 const PORT =  3333;

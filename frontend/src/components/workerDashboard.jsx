@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Mock data for demonstration
 const mockStats = {
@@ -25,6 +26,7 @@ export default function WorkerDashboard() {
   const [error, setError] = useState(null);
   const [tasks, setTasks] = useState(mockTasks);
   const username = localStorage.getItem("username");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchWorker = async () => {
@@ -87,7 +89,7 @@ export default function WorkerDashboard() {
               </span>
             ))}
           </div>
-          <button className="mt-2 mb-4 px-4 py-2 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition">Edit Profile</button>
+          <button className="mt-2 mb-4 px-4 py-2 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition" onClick={() => navigate('/editProfile')}>Edit Profile</button>
           {/* Today's Overview / Stats */}
           <div className="w-full mt-2">
             <h3 className="text-lg font-bold text-gray-800 mb-2">Today's Overview</h3>

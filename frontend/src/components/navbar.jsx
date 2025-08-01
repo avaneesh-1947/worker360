@@ -52,6 +52,8 @@ export default function Navbar() {
   }, [location.pathname]); // Location change pe bhi check karo
 
   const isLandingPage = location.pathname === '/';
+  const isWorker = Boolean(localStorage.getItem("username"));
+  const isWorkerDashboard = location.pathname === "/workerDashboard";
 
   return (
     <nav className="bg-white shadow-md w-full fixed top-0 left-0 z-10">
@@ -67,8 +69,11 @@ export default function Navbar() {
           <div className="hidden md:flex space-x-6 items-center">
             {auth ? (
               <>
-                <NavLink to="/hire" className="block text-gray-700 hover:text-green-600">Hire Worker</NavLink>
-               
+                {isWorker && isWorkerDashboard ? (
+                  <NavLink to="/map" className="block text-gray-700 hover:text-green-600">Add Location</NavLink>
+                ) : !isWorker ? (
+                  <NavLink to="/hire" className="block text-gray-700 hover:text-green-600">Hire Worker</NavLink>
+                ) : null}
                 <button onClick={handleLogout} className="block text-gray-700 hover:text-green-600">Logout</button>
               </>
             ) : (
@@ -94,8 +99,12 @@ export default function Navbar() {
         <div className="md:hidden bg-white px-4 pb-4 space-y-2">
            {auth ? (
               <>
-                <NavLink to="/hire" className="block text-gray-700 hover:text-green-600">Hire Worker</NavLink>
-                <NavLink to="/dashboard" className="block text-gray-700 hover:text-green-600">Dashboard</NavLink>
+                {isWorker && isWorkerDashboard ? (
+                  <NavLink to="/map" className="block text-gray-700 hover:text-green-600">Add Location</NavLink>
+                ) : !isWorker ? (
+                  <NavLink to="/hire" className="block text-gray-700 hover:text-green-600">Hire Worker</NavLink>
+                ) : null}
+                {isWorker && <NavLink to="/dashboard" className="block text-gray-700 hover:text-green-600">Dashboard</NavLink>}
                 <button onClick={handleLogout} className="block w-full text-left text-gray-700 hover:text-green-600">Logout</button>
               </>
             ) : (
